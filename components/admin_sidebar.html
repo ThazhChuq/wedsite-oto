@@ -1,0 +1,143 @@
+<nav class="admin-navbar">
+    <button class="admin-hamburger" aria-label="Menu" title="Menu">
+        <!-- Hamburger SVG icon -->
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect y="4" width="24" height="2" fill="white"/>
+            <rect y="11" width="24" height="2" fill="white"/>
+            <rect y="18" width="24" height="2" fill="white"/>
+        </svg>
+    </button>
+</nav>
+
+<aside class="admin-sidebar" aria-hidden="true">
+    <button class="admin-sidebar-close" aria-label="Close sidebar">&times;</button>
+    <nav class="admin-sidebar-nav">
+        <ul>
+            <li><a href="/shop_oto/pages/add_product.php">Thêm sản phẩm</a></li>
+            <li><a href="/shop_oto/pages/delete_product.php">Xóa sản phẩm</a></li>
+            <li><a href="/shop_oto/pages/edit_product.php">Sửa sản phẩm</a></li>
+            <li><a href="/shop_oto/pages/discount_product.php">Giảm giá</a></li>
+            <li><a href="/shop_oto/pages/increase_price_product.php">Tăng giá</a></li>
+            <li><a href="/shop_oto/pages/admin_info.php">Thông tin cá nhân</a></li>
+            <li><a href="/shop_oto/pages/user_management.php">Quản lý người dùng</a></li>
+            <li><a href="#">Báo cáo doanh thu</a></li>
+            <li><a href="#">Báo cáo đơn hàng</a></li>
+            <li><a href="/shop_oto/index.php">Quay về trang chính</a></li>
+            <li><a href="/shop_oto/php/admin_profile.php">Quay về trang quản lý</a></li>
+        </ul>
+    </nav>
+</aside>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const hamburger = document.querySelector('.admin-hamburger');
+    const sidebar = document.querySelector('.admin-sidebar');
+    const closeBtn = document.querySelector('.admin-sidebar-close');
+
+    // Toggle sidebar open/close on hamburger click
+    hamburger.addEventListener('click', () => {
+        const isHidden = sidebar.getAttribute('aria-hidden') === 'true';
+        if (isHidden) {
+            sidebar.setAttribute('aria-hidden', 'false');
+            sidebar.style.transform = 'translateX(0)';
+        } else {
+            sidebar.setAttribute('aria-hidden', 'true');
+            sidebar.style.transform = 'translateX(-100%)';
+        }
+    });
+
+    // Close sidebar on close button click
+    closeBtn.addEventListener('click', () => {
+        sidebar.setAttribute('aria-hidden', 'true');
+        sidebar.style.transform = 'translateX(-100%)';
+    });
+
+    // Close sidebar when clicking outside of it
+    document.addEventListener('click', (event) => {
+        if (!sidebar.contains(event.target) && !hamburger.contains(event.target)) {
+            sidebar.setAttribute('aria-hidden', 'true');
+            sidebar.style.transform = 'translateX(-100%)';
+        }
+    });
+
+    // Highlight active page link
+    const currentPath = window.location.pathname;
+    const navLinks = document.querySelectorAll('.admin-sidebar-nav ul li a');
+    navLinks.forEach(link => {
+        if (link.getAttribute('href') === currentPath) {
+            link.classList.add('active');
+        }
+    });
+});
+</script>
+
+<style>
+.admin-navbar {
+    background-color: #1f1f1f;
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+}
+
+.admin-hamburger {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: white;
+}
+
+.admin-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background-color: #121212;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+    padding-top: 50px;
+    overflow-y: auto;
+}
+
+.admin-sidebar-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: white;
+    cursor: pointer;
+}
+
+.admin-sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.admin-sidebar-nav ul li {
+    margin: 15px 0;
+}
+
+.admin-sidebar-nav ul li a {
+    color: #f9a825;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 10px 20px;
+    display: block;
+}
+
+.admin-sidebar-nav ul li a:hover,
+.admin-sidebar-nav ul li a.active {
+    background-color: #c7a500;
+    color: #121212;
+}
+</style>
